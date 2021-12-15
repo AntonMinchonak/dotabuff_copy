@@ -643,9 +643,9 @@ statsFill(matchData, radiantBlock, "finalRadWard", "finalRadSentry");
 statsFill(matchData2, direBlock, "finalDireWard", "finalDireSentry", 1);
 
 function underlineNET() {
-  let pizda = [8, 15, 16, 17,5,6,7,9,11]
-  for (let i = 0; i < pizda.length; i++) {
-  document.querySelectorAll(`.match-info__statsblock-row>div:nth-child(${pizda[i]})`)[indexMax[i]].style =
+  let columnsToUnderline = [8, 15, 16, 17,5,6,7,9,11]
+  for (let i = 0; i < columnsToUnderline.length; i++) {
+  document.querySelectorAll(`.match-info__statsblock-row>div:nth-child(${columnsToUnderline[i]})`)[indexMax[i]].style =
     "text-decoration: underline; text-decoration-style: solid;"
   }
 }
@@ -907,16 +907,16 @@ let hintData = [
           hintArmor.textContent = hintData[j].armor;
           hintRole.textContent = hintData[j].roles;
 
-          let jopa = ["Strength Hero", "Agility Hero", "Intellegence Hero"];
+          let typeList = ["Strength Hero", "Agility Hero", "Intellegence Hero"];
 
-          for (let pizda = 0; pizda < jopa.length; pizda++) {
-            if (hintData[j].heroType === jopa[pizda]) {
-              hintGainImg[pizda].classList.add("herohint__statsgain--main-img");
+          for (let it = 0; it < typeList.length; it++) {
+            if (hintData[j].heroType === typeList[it]) {
+              hintGainImg[it].classList.add("herohint__statsgain--main-img");
               let numDel = 1;
               let numDelHelp = 0;
-              if (pizda === 2) {
+              if (it === 2) {
                 numDel = 0;
-              } else if (pizda === 1) {
+              } else if (it === 1) {
                 numDel = 1;
                 numDelHelp = 1;
               }
