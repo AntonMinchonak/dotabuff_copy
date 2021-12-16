@@ -445,10 +445,6 @@ a {
   padding: 4px 4px 3px 4px;
 }
 
-.match-info__statsblock-header {
-  color: white !important;
-}
-
 .match-info__statsblock-header:not(:first-child, :nth-child(4)) {
   text-decoration: underline;
   text-decoration-style: dotted;
@@ -746,6 +742,23 @@ a {
   display: none;
 }
 
+.match-info__navbar {
+display: none;
+}
+
+.match-info__navbar-button {
+background: #202a33;
+border: none;
+color:rgb(180, 180, 180);
+padding: 10px;
+font-size: 12px;
+} 
+
+.navbar-button--active {
+color: rgb(255, 255, 255);
+background: #242F39;
+}
+
 @media (max-width: 900px) {
   .page-title__flex {
     gap: 4px;
@@ -898,6 +911,15 @@ a {
     text-align: center;
     float:none;
   }
+
+
+.match-info__statsblock-row>div:nth-child(n+9):nth-child(-n+19) {
+display: none;
+}
+
+.match-info__navbar {
+display: block;
+}
 
 }
 
