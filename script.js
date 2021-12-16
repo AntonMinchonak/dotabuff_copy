@@ -950,3 +950,76 @@ let hintData = [
 }
 
 hintsForHeroes()
+
+
+
+let statButtons = document.querySelectorAll(".match-info__navbar-button");
+let temp = document.querySelector(".navbar-button--active");
+
+function hideStats(from, to) {
+  for (let i = from; i < to; i++) {
+    for (let j = 0; j < 14; j++) {
+      document.querySelectorAll(
+        `.match-info__statsblock-row>div:nth-child(${i})`
+      )[j].style.display = "none";
+    }
+  }
+}
+
+function openStats(from, to) {
+  for (let i = from; i < to; i++) {
+    for (let j = 0; j < 14; j++) {
+      document.querySelectorAll(
+        `.match-info__statsblock-row>div:nth-child(${i})`
+      )[j].style.display = "block";
+    }
+  }
+}
+
+statButtons[0].onclick = () => {
+  hideStats(9, 20);
+  openStats(5, 9);
+}
+
+statButtons[1].onclick = () => {
+ hideStats(5, 9);
+   hideStats(15, 20);
+   openStats(9, 15);
+    }
+
+
+statButtons[2].onclick = () => {
+       hideStats(5, 15);
+       hideStats(18, 20);
+       openStats(15, 18);
+};
+    
+
+ statButtons[3].onclick = () => {
+   hideStats(5, 18);
+   openStats(18, 20);
+ };
+
+
+//window.onresize = () => {
+//  for (let i = 9; i < 20; i++) {
+//    for (let j = 0; j < 14; j++) {
+//      let columnToHide = document.querySelectorAll(
+//        `.match-info__statsblock-row>div:nth-child(${i})`
+//      )[j];
+//      if (window.innerWidth < 800) {
+//
+//        if (!columnToHide.classList.contains("hidden")) {
+//         console.log(!columnToHide.classList.contains("hidden"));
+//          columnToHide.classList.add("hidden");
+//        }
+//      } else if (window.innerWidth > 800 ) {
+//        columnToHide.classList.remove("hidden");
+//      }
+//    }
+//  }
+//};
+
+
+
+
