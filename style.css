@@ -59,11 +59,13 @@ a {
 
 .page-header__search-img {
   width: 14px;
+  cursor: pointer;
 }
 
 .page-header__steam {
   display: flex;
   gap: 10px;
+  cursor: pointer;
 }
 
 .page-header__steam-img {
@@ -178,6 +180,7 @@ a {
   font-size: 12px;
   border: 1px solid #92bb35;
   padding: 4px 7px;
+  cursor: pointer;
 }
 
 .page-title__comments-wrapper {
