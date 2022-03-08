@@ -18,7 +18,9 @@ let maxPreD = 0;
 let maxPreA = 0;
 let maxPreLH = 0;
 let maxPreDN = 0;
-let premaxlist = [maxPreNet, maxPreDMG, maxPreHEAL, maxPreBLD, maxPreK, maxPreD, maxPreA, maxPreLH, maxPreDN];
+let maxPreGPM = 0;
+let maxPreXPM = 0;
+let premaxlist = [maxPreNet, maxPreDMG, maxPreHEAL, maxPreBLD, maxPreK, maxPreD, maxPreA, maxPreLH, maxPreDN, maxPreGPM, maxPreXPM];
 
 function menuToggler() {
   let dataMobLists = [
@@ -118,8 +120,11 @@ dataCalculate();
 
 function statsFill(dataBase, sideBlock, finalWard, finalSentry, isDireRow = 0) {
   let row = 1 + isDireRow;
-  if (isDireRow === 1) { var Minus = 5; }
-  else { var Minus = 1; }
+  if (isDireRow === 1) {
+    var Minus = 5;
+  } else {
+    var Minus = 1;
+  }
 
   let radiantNET = 0;
   let radiantK = 0;
@@ -133,7 +138,6 @@ function statsFill(dataBase, sideBlock, finalWard, finalSentry, isDireRow = 0) {
   let radiantDMG = 0;
   let radiantHEAL = 0;
   let radiantBLD = 0;
-  let radiantWards = 0;
 
   for (let i = 0; i < 6; i++) {
     if (i !== 5) {
@@ -146,6 +150,8 @@ function statsFill(dataBase, sideBlock, finalWard, finalSentry, isDireRow = 0) {
       let preHEAL = dataBase[i]["HEAL"];
       let preBLD = dataBase[i]["BLD"];
       let preNET = dataBase[i]["NET"];
+      let preXPM = dataBase[i]["XPM"];
+      let preGPM = dataBase[i]["GPM"];
 
       if (preNET.indexOf("k") > -1) {
         preNET = preNET.replace("k", "");
@@ -187,7 +193,7 @@ function statsFill(dataBase, sideBlock, finalWard, finalSentry, isDireRow = 0) {
         radiantBLD += preBLD;
       }
 
-      let prelist = [preNET, preDMG, preHEAL, preBLD, preK, preD, preA, preLH, preDN];
+      let prelist = [preNET, preDMG, preHEAL, preBLD, preK, preD, preA, preLH, preDN, preXPM, preGPM];
       for (let premax = 0; premax < prelist.length; premax++) {
         if (prelist[premax] > premaxlist[premax]) {
           premaxlist[premax] = prelist[premax];
@@ -262,7 +268,6 @@ function statsFill(dataBase, sideBlock, finalWard, finalSentry, isDireRow = 0) {
     for (let ward of wards) {
       if (ward.textContent != "-") {
         let numberWards = Number(ward.textContent);
-
         sumWards += numberWards;
       } else {
         ward.style.color = "rgb(180, 180, 180)";
@@ -280,11 +285,53 @@ function statsFill(dataBase, sideBlock, finalWard, finalSentry, isDireRow = 0) {
 statsFill(matchData, radiantBlock, "finalRadWard", "finalRadSentry");
 statsFill(matchData2, direBlock, "finalDireWard", "finalDireSentry", 1);
 
+function maxWardCounter() {
+  let wards = document.querySelectorAll(".ward");
+  let maxObsWardCount = 0;
+  let maxObsWardRow = 0;
+
+  let wardsSentry = document.querySelectorAll(".sentry");
+  let maxSentryWardCount = 0;
+  let maxSentryWardRow = 0;
+
+  let skipedRows = 0;
+
+  for (let i = 0; i < wards.length; i++) {
+    if (wards[i].classList.contains("finalRadWard") || wards[i].classList.contains("finalDireWard")) {
+      skipedRows++;
+      continue;
+    }
+
+    if (Number(wards[i].textContent) > maxObsWardCount) {
+      maxObsWardCount = Number(wards[i].textContent);
+      maxObsWardRow = i;
+      if (skipedRows === 1) maxObsWardRow++;
+    }
+    if (Number(wardsSentry[i].textContent) > maxSentryWardCount) {
+      maxSentryWardCount = Number(wardsSentry[i].textContent);
+      maxSentryWardRow = i;
+      if (skipedRows === 1) maxSentryWardRow++;
+    }
+  }
+  indexMax.push(maxObsWardRow + 1, maxSentryWardRow + 1);
+}
+maxWardCounter();
+
 function underlineNET() {
-  let columnsToUnderline = [8, 15, 16, 17, 5, 6, 7, 9, 11];
+  let wardindex = 0;
+  let columnsToUnderline = [8, 15, 16, 17, 5, 6, 7, 9, 11, 12, 14, 18];
+  console.log(indexMax);
   for (let i = 0; i < columnsToUnderline.length; i++) {
-    document.querySelectorAll(`.match-info__statsblock-row>div:nth-child(${columnsToUnderline[i]})`)[indexMax[i]].style =
-      "text-decoration: underline; text-decoration-style: solid;";
+    if (i >= columnsToUnderline.length - 1) {
+      document.querySelectorAll(`.match-info__statsblock-row>div:nth-child(${columnsToUnderline[i]})`)[indexMax[i]].querySelectorAll("span")[0].style =
+        "text-decoration: underline; text-decoration-style: solid;";
+      document.querySelectorAll(`.match-info__statsblock-row>div:nth-child(${columnsToUnderline[i]})`)[indexMax[i + 1]].querySelectorAll("span")[1].style =
+        "text-decoration: underline; text-decoration-style: solid;";
+      wardindex++;
+    } else {
+      document.querySelectorAll(`.match-info__statsblock-row>div:nth-child(${columnsToUnderline[i]})`)[indexMax[i]].style =
+        "text-decoration: underline; text-decoration-style: solid;";
+    }
   }
 }
 underlineNET();
@@ -300,11 +347,11 @@ function hoverForStats() {
           } else {
             column[j].closest(".match-info__stats-radiant") ? (column[j].style.backgroundColor = "#3E4842") : (column[j].style.backgroundColor = "#393C44");
           }
-          if (i === j) column[j].style.backgroundColor = "#454D55"; 
+          if (i === j) column[j].style.backgroundColor = "#454D55";
         }
       };
       column[i].onmouseout = () => {
-        for (let j = 0; j < column.length; j++)  column[j].style.backgroundColor = "";
+        for (let j = 0; j < column.length; j++) column[j].style.backgroundColor = "";
       };
     }
   }
@@ -312,15 +359,14 @@ function hoverForStats() {
   let hoverRow = document.querySelectorAll(`.match-info__statsblock-row`);
 
   for (let i = 1; i < hoverRow.length - 1; i++) {
-    hoverRow[i].onmouseover = () =>  hoverRow[i].style.backgroundColor = "#39424B";
-    hoverRow[i].onmouseout = () =>  hoverRow[i].style.backgroundColor = "";
+    hoverRow[i].onmouseover = () => (hoverRow[i].style.backgroundColor = "#39424B");
+    hoverRow[i].onmouseout = () => (hoverRow[i].style.backgroundColor = "");
   }
 }
 
 hoverForStats();
 
 function hintsForHeroes() {
-
   let imgs = document.querySelectorAll("img");
   let herohint = document.querySelector(".herohint");
   let hintImg = document.querySelector(".herohint__heroimg");
@@ -375,8 +421,11 @@ function hintsForHeroes() {
           }
         };
         imgs[i].onmousemove = () => {
-          if (window.event.clientY > 740) { herohint.style.top = "750px"; }
-          else { herohint.style.top = window.event.clientY + 10 + "px"; }
+          if (window.event.clientY > 740) {
+            herohint.style.top = "750px";
+          } else {
+            herohint.style.top = window.event.clientY + 10 + "px";
+          }
           herohint.style.left = window.event.pageX + 5 + "px";
         };
         imgs[i].onmouseout = () => herohint.classList.add("hidden");
