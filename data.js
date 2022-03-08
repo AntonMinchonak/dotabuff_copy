@@ -222,7 +222,7 @@ export let matchData2 = [
     DMG: "16.7k",
     HEAL: 716,
     BLD: "-",
-    wards: '<span class="ward">18</span>/<span class="sentry">39</span>',
+    wards: '<span class="ward">18</span>/<span class="sentry">37</span>',
     isBuffs: "Buffs:",
     items: {
       buffs: '<img class="match-info__buffs-image" src="itemimages/tome-of-knowledge.jpg">',
@@ -252,7 +252,7 @@ export let matchData2 = [
     DMG: "20.4k",
     HEAL: "5.8k",
     BLD: "375",
-    wards: '<span class="ward">19</span>/<span class="sentry">39</span>',
+    wards: '<span class="ward">19</span>/<span class="sentry">38</span>',
     isBuffs: "Buffs:",
     items: {
       buffs: '<img class="match-info__buffs-image" src="itemimages/aghanims-shard-bf9def7dc51a9f3191c8303418a5ffc97cab23cbed5a9b1369254b75e8753885.jpg">',
