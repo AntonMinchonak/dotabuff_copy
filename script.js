@@ -1,4 +1,4 @@
-import { matchData, matchData2, hintData } from "./data.js";
+import { matchData, matchData2, hintData } from "/data.js";
 
 let sublists = document.querySelectorAll(".page-header__sublist");
 let menuItems = document.querySelectorAll(".page-header__menu-item");
